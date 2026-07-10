@@ -1,0 +1,47 @@
+---
+- name: Install NVM dependencies
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - curl
+      - git
+    state: present
+
+- name: Clone NVM
+  become: true
+  become_user: "{{ workstation_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "{{ workstation_home }}/.nvm"
+    version: "{{ nvm_version }}"
+    update: true
+
+- name: Add NVM configuration to Bash
+  become: true
+  become_user: "{{ workstation_user }}"
+  ansible.builtin.blockinfile:
+    path: "{{ workstation_home }}/.bashrc"
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED NVM"
+    block: |
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+- name: Install Node.js LTS
+  become: true
+  become_user: "{{ workstation_user }}"
+  ansible.builtin.shell:
+    cmd: |
+      set -e
+      export NVM_DIR="{{ workstation_home }}/.nvm"
+      . "$NVM_DIR/nvm.sh"
+      nvm install {{ node_version }}
+      nvm alias default 'lts/*'
+      nvm use default
+      corepack enable
+    executable: /bin/bash
+  environment:
+    HOME: "{{ workstation_home }}"
+  register: node_install
+  changed_when: "'already installed' not in node_install.stdout"
