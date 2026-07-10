@@ -2,7 +2,9 @@
 
 ```bash
 sudo apt update -y
-sudo apt install -y git ansible firefox
+sudo apt purge ansible -y
+sudo apt autoremove -y
+sudo apt install -y git firefox
 
 ./usr/bin/firefox
 
@@ -16,6 +18,10 @@ cat ~/.ssh/id_ed25519.pub
 
 # Add to github
 https://github.com/settings/ssh/new
+
+# Install ansible: https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
+pipx install --include-deps ansible
+pipx ensurepath
 
 git clone git@github.com:rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
