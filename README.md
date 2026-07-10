@@ -19,9 +19,11 @@ cat ~/.ssh/id_ed25519.pub
 # Add to github
 https://github.com/settings/ssh/new
 
-# Install ansible: https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
+# Install ansible with python (not with apt!): https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
 pipx install --include-deps ansible
 pipx ensurepath
+source ~/.bashrc
+ansible --version
 
 # Upgrade ansible to latest
 pipx upgrade --include-injected ansible
