@@ -31,8 +31,5 @@ pipx upgrade --include-injected ansible
 git clone git@github.com:rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
 
-ansible-playbook \
-    --inventory inventory.ini \
-    --ask-become-pass \
-    playbook.yml
+ansible-playbook -i inventory.ini --ask-become-pass playbook.yml --limit local
 ```

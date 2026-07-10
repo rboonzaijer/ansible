@@ -1,0 +1,15 @@
+---
+# username: roel
+
+workstation_user: roel
+workstation_home: "/home/{{ workstation_user }}"
+
+git_user_name: "Roel"
+git_user_email: "10514742+rboonzaijer@users.noreply.github.com"
+
+nvm_version: "v0.40.5"
+node_version: "--lts"
+
+php_version: "8.5"
+
+apt_architecture: "amd64"

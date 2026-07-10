@@ -1,28 +1,15 @@
 ---
-- name: Configure Kubuntu development workstation
+- name: Test
   hosts: local
   become: true
-
-  vars:
-    workstation_user: roel
-    workstation_home: "/home/{{ workstation_user }}"
-
-    git_user_name: "Roel Boonzaijer"
-    git_user_email: "your-email@example.com"
-
-    nvm_version: "v0.40.3"
-    node_version: "--lts"
-
-    php_version: "8.5"
-
-    apt_architecture: "amd64"
-
+  vars_files:
+    - ./variables.yml
   roles:
-    - common
-    - firefox
-    - chrome
-    - vscode
-    - docker
+    #- common
+    # - firefox
+    # - chrome
+    # - vscode
+    # - docker
     - php
-    - node
-    - git
+    # - node
+    # - git
