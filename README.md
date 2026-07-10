@@ -23,6 +23,9 @@ https://github.com/settings/ssh/new
 pipx install --include-deps ansible
 pipx ensurepath
 
+# Upgrade ansible to latest
+pipx upgrade --include-injected ansible
+
 git clone git@github.com:rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
 
