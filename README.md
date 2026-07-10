@@ -4,7 +4,7 @@
 sudo apt update -y
 sudo apt install -y git ansible
 
-git clone https://github.com/rboonzaijer/ansible-kubuntu.git
+git clone https://rboonzaijer@github.com/rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
 
 ansible-playbook \
