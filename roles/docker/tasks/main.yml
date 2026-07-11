@@ -1,41 +1,115 @@
 ---
+# https://docs.docker.com/engine/install/ubuntu/
+
 - name: Remove conflicting Docker packages
   ansible.builtin.apt:
     name:
-      - containerd
       - docker.io
       - docker-compose
       - docker-compose-v2
       - docker-doc
       - podman-docker
+      - containerd
       - runc
     state: absent
+#
 
-- name: Download Docker repository signing key
-  ansible.builtin.get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/keyrings/docker.asc
-    mode: "0644"
-
-- name: Add Docker APT repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch={{ apt_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-    filename: docker
+- name: Add Docker repository
+  ansible.builtin.deb822_repository:
+    name: docker
+    uris: https://download.docker.com/linux/ubuntu
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: [stable]
+    types: [deb]
+    signed_by: https://download.docker.com/linux/ubuntu/gpg
+    architectures: ["{{ apt_architecture }}"]
     state: present
+  notify: apt-update
 
-- name: Update APT cache
-  ansible.builtin.apt:
-    update_cache: true
+- name: Check if notifiers were called - call handlers if requied - apt-update
+  ansible.builtin.meta: flush_handlers
 
-- name: Install Docker Engine
+- name: Install Docker packages
   ansible.builtin.apt:
     name:
-      - containerd.io
-      - docker-buildx-plugin
       - docker-ce
       - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
       - docker-compose-plugin
     state: present
+
+
+# - name: Create APT keyrings directory
+#   ansible.builtin.file:
+#     path: /etc/apt/keyrings
+#     state: directory
+#     mode: "0755"
+#
+# - name: Download Docker repository signing key
+#   ansible.builtin.get_url:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     dest: /etc/apt/keyrings/docker.asc
+#     mode: "0644"
+#
+# - name: Add Docker APT repository
+#   ansible.builtin.apt_repository:
+#     repo: "deb [arch={{ apt_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+#     filename: docker
+#     state: present
+  #
+  # - name: Add Docker repository
+  #   ansible.builtin.deb822_repository:
+  #     name: docker
+  #     uris: https://download.docker.com/linux/ubuntu
+  #     suites: "{{ ansible_facts.distribution_release }}"
+  #     components: [stable]
+  #     types: [deb]
+  #     signed_by: https://download.docker.com/linux/ubuntu/gpg
+  #     architectures: ["{{ apt_architecture }}"]
+  #     state: present
+  #   notify: Update APT cache
+  #
+  # - name: Run pending handlers
+  #   ansible.builtin.meta: flush_handlers
+  #
+  # - name: Install Docker packages
+  #   ansible.builtin.apt:
+  #     name:
+  #       - docker-ce
+  #       - docker-ce-cli
+  #       - containerd.io
+  #       - docker-buildx-plugin
+  #       - docker-compose-plugin
+  #     state: present
+#
+# - name: Add Docker repository
+#   ansible.builtin.deb822_repository:
+#     name: docker
+#     uris: https://download.docker.com/linux/ubuntu
+#     suites: "{{ ansible_facts.distribution_release }}"
+#     components: [stable]
+#     types: [deb]
+#     signed_by: https://download.docker.com/linux/ubuntu/gpg
+#     architectures: ["{{ apt_architecture }}"]
+#     state: present
+#   notify: Update APT cache
+#
+# - meta: flush_handlers
+#
+# - name: Update APT cache
+#   ansible.builtin.apt:
+#     update_cache: true
+#
+# - name: Install Docker Engine
+#   ansible.builtin.apt:
+#     name:
+#       - docker-ce
+#       - docker-ce-cli
+#       - containerd.io
+#       - docker-buildx-plugin
+#       - docker-compose-plugin
+#     state: present
 
 - name: Enable and start Docker
   ansible.builtin.systemd:
@@ -49,3 +123,12 @@
     groups:
       - docker
     append: true
+
+- name: Inform user
+  ansible.builtin.debug:
+    msg: >
+      {{ workstation_user }} has been added to the docker group.
+      Log out and back in before using Docker without sudo.
+
+      To activate the new group in the current shell without logging out, run:
+        newgrp docker

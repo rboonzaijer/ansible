@@ -4,11 +4,15 @@
   become: true
   vars_files:
     - ./variables.yml
+  handlers:
+    - name: apt-update
+      ansible.builtin.apt:
+        update_cache: true
   roles:
     #- common
     #- git
-    - php
-    #- docker
+    #- php
+    - docker
     # - vscode
     # - firefox
     # - chrome
