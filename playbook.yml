@@ -9,8 +9,8 @@
       ansible.builtin.apt:
         update_cache: true
   roles:
-    #- common
-    - ssh_key
+    - common
+    #- ssh_key
     #- git
     #- php
     #- docker
