@@ -1,34 +1,29 @@
 ---
-- name: testing
-  ansible.builtin.command: /bin/echo foo
-
 - name: Update APT cache
   ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
 
-# - name: Install common packages
-#   ansible.builtin.apt:
-#     name:
-#       - apt-transport-https
-#       # - bash-completion
-#       # - build-essential
-#       # - ca-certificates
-#       # - curl
-#       # - gpg
-#       # - htop
-#       # - jq
-#       # - less
-#       # - lsb-release
-#       # - net-tools
-#       # - openssh-client
-#       # - software-properties-common
-#       # - tree
-#       # - unzip
-#       # - wget
-#       # - zip
-#     state: present
-#
+- name: Install common packages
+  ansible.builtin.apt:
+    name:
+      - bash-completion
+      - build-essential
+      - ca-certificates
+      - curl
+      - gpg
+      - htop
+      - jq
+      - less
+      - net-tools
+      - openssh-client
+      - software-properties-common
+      - tree
+      - unzip
+      - wget
+      - zip
+    state: present
+
 # - name: Create APT keyrings directory
 #   ansible.builtin.file:
 #     path: /etc/apt/keyrings

@@ -5,11 +5,13 @@
   vars_files:
     - ./variables.yml
   roles:
-    #- common
+    - common
+    #- git
+    #- php
     # - firefox
     # - chrome
     # - vscode
     # - docker
-    #- php
+
     # - node
-    - git
+
