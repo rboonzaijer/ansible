@@ -33,3 +33,35 @@ cd ansible-kubuntu
 
 ansible-playbook -i inventory.ini --ask-become-pass playbook.yml --limit local
 ```
+
+
+# How to know repository
+
+```bash
+
+#The old way:
+#sudo add-apt-repository -r ppa:git-core/ppa
+
+1. Open the Launchpad page.
+2. Copy the fingerprint.
+3. Construct: signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x<FINGERPRINT>
+4. Use the standard Launchpad URL pattern: uris: https://ppa.launchpadcontent.net/<owner>/<ppa>/ubuntu
+
+# https://launchpad.net/~git-core/+archive/ubuntu/ppa
+# Click: Technical details about this PPA
+# Fingerprint = F911AB184317630C59970973E363C90F8F1B6217
+# so: signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217
+# url is already there: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+# name = the part of the url without slashes (git-core)
+```
+Create:
+```yml
+- name: Add apt repository for GIT
+  ansible.builtin.deb822_repository:
+    name: git-core
+    types: [deb]
+    uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: [main]
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217
+``` 

@@ -10,6 +10,6 @@
     # - chrome
     # - vscode
     # - docker
-    - php
+    #- php
     # - node
-    # - git
+    - git

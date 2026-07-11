@@ -1,41 +1,56 @@
 ---
+- name: Add apt repository for GIT
+  ansible.builtin.deb822_repository:
+    name: git-core
+    types: [deb]
+    uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: [main]
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
 - name: Install Git
   ansible.builtin.apt:
     name: git
-    state: present
+    #state: present
+    state: latest
 
-- name: Configure Git user name
-  become: true
-  become_user: "{{ workstation_user }}"
-  ansible.builtin.command:
-    cmd: git config --global user.name "{{ git_user_name }}"
-  environment:
-    HOME: "{{ workstation_home }}"
-  changed_when: false
-
-- name: Configure Git email
-  become: true
-  become_user: "{{ workstation_user }}"
-  ansible.builtin.command:
-    cmd: git config --global user.email "{{ git_user_email }}"
-  environment:
-    HOME: "{{ workstation_home }}"
-  changed_when: false
-
-- name: Configure Git default branch
-  become: true
-  become_user: "{{ workstation_user }}"
-  ansible.builtin.command:
-    cmd: git config --global init.defaultBranch main
-  environment:
-    HOME: "{{ workstation_home }}"
-  changed_when: false
-
-- name: Configure Git automatic line endings
-  become: true
-  become_user: "{{ workstation_user }}"
-  ansible.builtin.command:
-    cmd: git config --global core.autocrlf input
-  environment:
-    HOME: "{{ workstation_home }}"
-  changed_when: false
+#
+# - name: Configure Git user name
+#   become: true
+#   become_user: "{{ workstation_user }}"
+#   ansible.builtin.command:
+#     cmd: git config --global user.name "{{ git_user_name }}"
+#   environment:
+#     HOME: "{{ workstation_home }}"
+#   changed_when: false
+#
+# - name: Configure Git email
+#   become: true
+#   become_user: "{{ workstation_user }}"
+#   ansible.builtin.command:
+#     cmd: git config --global user.email "{{ git_user_email }}"
+#   environment:
+#     HOME: "{{ workstation_home }}"
+#   changed_when: false
+#
+# - name: Configure Git default branch
+#   become: true
+#   become_user: "{{ workstation_user }}"
+#   ansible.builtin.command:
+#     cmd: git config --global init.defaultBranch main
+#   environment:
+#     HOME: "{{ workstation_home }}"
+#   changed_when: false
+#
+# - name: Configure Git automatic line endings
+#   become: true
+#   become_user: "{{ workstation_user }}"
+#   ansible.builtin.command:
+#     cmd: git config --global core.autocrlf input
+#   environment:
+#     HOME: "{{ workstation_home }}"
+#   changed_when: false
