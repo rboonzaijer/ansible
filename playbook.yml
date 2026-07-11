@@ -16,7 +16,7 @@
     #- vscode
     #- chrome
     #- firefox
-    - snap
+    - snap-update
 
     #
     # - node
