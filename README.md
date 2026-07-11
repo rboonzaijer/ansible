@@ -2,25 +2,38 @@
 
 ## Kubuntu 26.04
 
+### Initial setup
+
 ```bash
 sudo apt update -y
 sudo apt purge ansible -y
 sudo apt autoremove -y
 sudo apt install -y git firefox
+```
 
+### Download 1password first with firefox
+
+```bash
 ./usr/bin/firefox
+```
 
-# Download 1password first...
+### Configurue git
 
+```bash
 git config --global user.name "Roel"
 git config --global user.email "10514742+rboonzaijer@users.noreply.github.com"
 
 ssh-keygen -t ed25519 -C "rboonzaijer"
 cat ~/.ssh/id_ed25519.pub
+```
 
-# Add to github
+### Add to github
+
 https://github.com/settings/ssh/new
 
+### Install ansible
+
+```bash
 # Install ansible with python (not with apt!): https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
 pipx install --include-deps ansible
 pipx ensurepath
@@ -29,21 +42,29 @@ ansible --version
 
 # Upgrade ansible to latest
 pipx upgrade --include-injected ansible
+```
 
+### Get ansible playbook files
+
+```bash
 git clone git@github.com:rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
+```
 
+### Run ansible playbook
 
+```bash
 ansible-playbook -i inventory.ini playbook-install.yml --ask-become-pass --limit local
 
 ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit local
-
-#--ask-become-pass # ask the sudo password before running
-#-limit local # limit to local hosts
 ```
 
+- --ask-become-pass # ask the sudo password before running
+- --limit local # limit to local hosts
 
-# How to know repository
+# Manage playbooks/roles
+
+### How to know repository
 
 ```bash
 
