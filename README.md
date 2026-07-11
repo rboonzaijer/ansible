@@ -62,6 +62,13 @@ ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit
 - --ask-become-pass # ask the sudo password before running
 - --limit local # limit to local hosts
 
+### Manual
+
+- Add ssh-key:
+  - github: https://github.com/settings/ssh/new
+  - gitlab: https://gitlab.com/-/user_settings/ssh_keys
+- vscode: signin with github (sync)
+
 # Manage playbooks/roles
 
 ### How to know repository
