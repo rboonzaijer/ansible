@@ -15,8 +15,8 @@
     #- docker
     #- vscode
     #- chrome
-    #- firefox
-    - snap-update
+    - firefox
+    #- snap-update
 
     #
     # - node

@@ -1,52 +1,10 @@
 ---
-- name: Check whether Snap is installed
-  ansible.builtin.command:
-    cmd: snap version
-  register: snap_check
-  failed_when: false
-  changed_when: false
-
-- name: Check whether Firefox Snap is installed
-  ansible.builtin.command:
-    cmd: snap list firefox
-  register: firefox_snap
-  failed_when: false
-  changed_when: false
-  when: snap_check.rc == 0
-
-- name: Remove Firefox Snap
-  ansible.builtin.command:
-    cmd: snap remove --purge firefox
-  when:
-    - snap_check.rc == 0
-    - firefox_snap.rc == 0
-
-- name: Download Mozilla repository signing key
-  ansible.builtin.get_url:
-    url: https://packages.mozilla.org/apt/repo-signing-key.gpg
-    dest: /etc/apt/keyrings/packages.mozilla.org.asc
-    mode: "0644"
-
-- name: Add Mozilla APT repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main"
-    filename: mozilla
-    state: present
-
-- name: Prefer packages from Mozilla repository
-  ansible.builtin.copy:
-    dest: /etc/apt/preferences.d/mozilla
-    mode: "0644"
-    content: |
-      Package: *
-      Pin: origin packages.mozilla.org
-      Pin-Priority: 1000
-
 - name: Update APT cache
   ansible.builtin.apt:
     update_cache: true
+    cache_valid_time: 3600
 
-- name: Install native Firefox
+- name: Install Firefox
   ansible.builtin.apt:
     name: firefox
     state: present
