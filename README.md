@@ -1,5 +1,7 @@
 # ansible-kubuntu
 
+## Kubuntu 26.04
+
 ```bash
 sudo apt update -y
 sudo apt purge ansible -y
