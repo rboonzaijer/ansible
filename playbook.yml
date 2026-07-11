@@ -10,7 +10,8 @@
         update_cache: true
   roles:
     #- common
-    - git
+    - ssh_key
+    #- git
     #- php
     #- docker
     #- vscode

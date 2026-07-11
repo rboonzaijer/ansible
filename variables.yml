@@ -6,6 +6,7 @@ workstation_home: "/home/{{ workstation_user }}"
 
 git_user_name: "Roel"
 git_user_email: "10514742+rboonzaijer@users.noreply.github.com"
+ssh_key_comment: "roel"
 
 nvm_version: "v0.40.5"
 node_version: "--lts"

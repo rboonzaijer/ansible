@@ -1,0 +1,18 @@
+---
+- name: Ensure ~/.ssh directory exists
+  become: true
+  become_user: "{{ workstation_user }}"
+  ansible.builtin.file:
+    path: "{{ workstation_home }}/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: Generate SSH key pair
+  become: true
+  become_user: "{{ workstation_user }}"
+  community.crypto.openssh_keypair:
+    path: "{{ workstation_home }}/.ssh/id_ed25519"
+    type: ed25519
+    comment: "{{ ssh_key_comment }}"
+    mode: "0600"
+    state: present
