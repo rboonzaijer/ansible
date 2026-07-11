@@ -1,0 +1,17 @@
+---
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Perform full system upgrade
+  ansible.builtin.apt:
+    upgrade: full
+
+- name: Remove no longer required packages
+  ansible.builtin.apt:
+    autoremove: true
+
+- name: Remove obsolete package files
+  ansible.builtin.apt:
+    autoclean: true
