@@ -1,0 +1,24 @@
+---
+- name: Check whether snapd is installed
+  ansible.builtin.command:
+    cmd: snap version
+  register: snap_check
+  failed_when: false
+  changed_when: false
+
+- name: Check for available Snap updates
+  ansible.builtin.command:
+    cmd: snap refresh --list
+  register: snap_updates
+  failed_when: false
+  changed_when: false
+  when: snap_check.rc == 0
+
+- name: Refresh all Snap packages
+  ansible.builtin.command:
+    cmd: snap refresh
+  when:
+    - snap_check.rc == 0
+    - snap_updates.rc == 0
+    - snap_updates.stdout_lines | length > 1
+  changed_when: true

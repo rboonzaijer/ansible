@@ -14,8 +14,9 @@
     #- php
     #- docker
     #- vscode
-    # - firefox
-    - chrome
+    #- chrome
+    #- firefox
+    - snap
 
     #
     # - node
