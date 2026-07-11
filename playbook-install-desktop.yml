@@ -19,7 +19,10 @@
     - node
     - docker
     - vscode
+
+    # Optional
     - virtualbox
+    - onepassword
 
     # Browsers
     - chrome
