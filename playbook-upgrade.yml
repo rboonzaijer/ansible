@@ -1,0 +1,13 @@
+---
+- name: Upgrade system packages and Snap packages
+  hosts: local
+  become: true
+  vars_files:
+    - ./variables.yml
+  handlers:
+    - name: apt-update
+      ansible.builtin.apt:
+        update_cache: true
+  roles:
+    - system-upgrade
+    - snap-update

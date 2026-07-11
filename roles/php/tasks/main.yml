@@ -26,10 +26,14 @@
         and ansible_facts.distribution_release in ['jammy', 'noble']
         else 'absent'
       }}
+  notify: apt-update
 
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+# - name: Update apt cache
+#   ansible.builtin.apt:
+#     update_cache: true
 
 - name: Install PHP
   ansible.builtin.apt:

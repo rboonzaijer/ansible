@@ -1,0 +1,29 @@
+---
+- name: Install development tools
+  hosts: local
+  become: true
+  vars_files:
+    - ./variables.yml
+  handlers:
+    - name: apt-update
+      ansible.builtin.apt:
+        update_cache: true
+  roles:
+    # System packages
+    - common
+
+    # Development tools
+    - ssh_key
+    - git
+    - php
+    - node
+    - docker
+    - vscode
+
+    # Browsers
+    - chrome
+    - firefox
+
+    # Finally upgrade the system and snap packages
+    - system-upgrade
+    - snap-update

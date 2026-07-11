@@ -28,7 +28,26 @@
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-- name: Install Node.js LTS
+- name: Check if latest Node.js LTS is installed
+  become: true
+  become_user: "{{ workstation_user }}"
+  ansible.builtin.shell:
+    cmd: |
+      export NVM_DIR="{{ workstation_home }}/.nvm"
+      . "$NVM_DIR/nvm.sh"
+
+      installed_version="$(nvm version 'lts/*')"
+      remote_version="$(nvm version-remote --lts)"
+
+      [ "$installed_version" = "$remote_version" ]
+    executable: /bin/bash
+  environment:
+    HOME: "{{ workstation_home }}"
+  register: node_installed
+  failed_when: false
+  changed_when: false
+
+- name: Install latest Node.js LTS
   become: true
   become_user: "{{ workstation_user }}"
   ansible.builtin.shell:
@@ -36,12 +55,12 @@
       set -e
       export NVM_DIR="{{ workstation_home }}/.nvm"
       . "$NVM_DIR/nvm.sh"
-      nvm install {{ node_version }}
+
+      nvm install --lts
       nvm alias default 'lts/*'
       nvm use default
       corepack enable
     executable: /bin/bash
   environment:
     HOME: "{{ workstation_home }}"
-  register: node_install
-  changed_when: "'already installed' not in node_install.stdout"
+  when: node_installed.rc != 0

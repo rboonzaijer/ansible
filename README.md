@@ -31,9 +31,13 @@ pipx upgrade --include-injected ansible
 git clone git@github.com:rboonzaijer/ansible-kubuntu.git
 cd ansible-kubuntu
 
-./run.sh
 
-# ansible-playbook -i inventory.ini playbook.yml --ask-become-pass --limit local
+ansible-playbook -i inventory.ini playbook-install.yml --ask-become-pass --limit local
+
+ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit local
+
+#--ask-become-pass # ask the sudo password before running
+#-limit local # limit to local hosts
 ```
 
 
