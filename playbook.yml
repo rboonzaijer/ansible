@@ -13,9 +13,9 @@
     #- git
     #- php
     #- docker
-    - vscode
+    #- vscode
     # - firefox
-    # - chrome
+    - chrome
 
     #
     # - node
