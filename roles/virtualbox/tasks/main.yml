@@ -1,0 +1,29 @@
+---
+- name: Add Oracle VirtualBox repository
+  ansible.builtin.deb822_repository:
+    name: virtualbox
+    types: [deb]
+    uris: https://download.virtualbox.org/virtualbox/debian
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: [contrib]
+    signed_by: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+  notify: apt-update
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Install VirtualBox
+  ansible.builtin.apt:
+    name: "{{ virtualbox_package }}"
+    state: present
+
+- name: Ensure vboxusers group exists
+  ansible.builtin.group:
+    name: vboxusers
+    state: present
+
+- name: Add user to vboxusers
+  ansible.builtin.user:
+    name: "{{ workstation_user }}"
+    groups: vboxusers
+    append: true
