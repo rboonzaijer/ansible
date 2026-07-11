@@ -54,7 +54,7 @@ cd ansible-kubuntu
 ### Run ansible playbook
 
 ```bash
-ansible-playbook -i inventory.ini playbook-install.yml --ask-become-pass --limit local
+ansible-playbook -i inventory.ini playbook-install-desktop.yml --ask-become-pass --limit local
 
 ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit local
 ```
