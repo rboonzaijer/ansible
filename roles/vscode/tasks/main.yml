@@ -1,19 +1,38 @@
 ---
-- name: Download Microsoft repository signing key
-  ansible.builtin.get_url:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    dest: /etc/apt/keyrings/packages.microsoft.asc
-    mode: "0644"
+# - name: Download Microsoft repository signing key
+#   ansible.builtin.get_url:
+#     url: https://packages.microsoft.com/keys/microsoft.asc
+#     dest: /etc/apt/keyrings/packages.microsoft.asc
+#     mode: "0644"
+#
+# - name: Add Visual Studio Code APT repository
+#   ansible.builtin.apt_repository:
+#     repo: "deb [arch={{ apt_architecture }} signed-by=/etc/apt/keyrings/packages.microsoft.asc] https://packages.microsoft.com/repos/code stable main"
+#     filename: vscode
+#     state: present
+#
+# - name: Update APT cache
+#   ansible.builtin.apt:
+#     update_cache: true
+#
+# - name: Install Visual Studio Code
+#   ansible.builtin.apt:
+#     name: code
+#     state: present
 
-- name: Add Visual Studio Code APT repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch={{ apt_architecture }} signed-by=/etc/apt/keyrings/packages.microsoft.asc] https://packages.microsoft.com/repos/code stable main"
-    filename: vscode
-    state: present
+- name: Add Visual Studio Code repository
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: [deb]
+    uris: https://packages.microsoft.com/repos/code
+    suites: stable
+    components: [main]
+    architectures: ["{{ apt_architecture }}"]
+    signed_by: https://packages.microsoft.com/keys/microsoft.asc
+  notify: apt-update
 
-- name: Update APT cache
-  ansible.builtin.apt:
-    update_cache: true
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Install Visual Studio Code
   ansible.builtin.apt:

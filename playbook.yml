@@ -12,8 +12,8 @@
     #- common
     #- git
     #- php
-    - docker
-    # - vscode
+    #- docker
+    - vscode
     # - firefox
     # - chrome
 
