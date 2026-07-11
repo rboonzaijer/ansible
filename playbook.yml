@@ -10,14 +10,14 @@
         update_cache: true
   roles:
     #- common
-    #- git
+    - git
     #- php
     #- docker
     #- vscode
     #- chrome
     #- firefox
 
-    - system-upgrade
+    #- system-upgrade
     #- snap-update
 
     #
