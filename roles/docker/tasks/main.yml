@@ -44,6 +44,11 @@
     enabled: true
     state: started
 
+- name: Ensure docker group exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
 - name: Add workstation user to Docker group
   ansible.builtin.user:
     name: "{{ workstation_user }}"
