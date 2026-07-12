@@ -46,6 +46,14 @@ ansible-playbook -i inventory.ini --ask-become-pass playbook-desktop.yml --limit
 
 # Update/Upgrade
 ansible-playbook -i inventory.ini --ask-become-pass playbook-upgrade.yml --limit local_desktop
+
+# After installation, reload profile/path
+source ~/.bashrc
+
+# Cleanup
+cd ~
+rm ~/ansible.zip
+rm -r ansible-zip/
 ```
 
 ## Add SSH-Key to git accounts
