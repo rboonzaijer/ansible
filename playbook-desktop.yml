@@ -1,5 +1,5 @@
 ---
-- name: Install development tools
+- name: Install development tools for desktop
   hosts: local
   become: true
   vars_files:
@@ -12,7 +12,7 @@
     # System packages
     - common
 
-    # Development tools
+    # Development
     - ssh_key
     - git
     - php

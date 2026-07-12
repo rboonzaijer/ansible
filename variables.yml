@@ -1,12 +1,21 @@
 ---
-# username: roel
 
-workstation_user: roel
-workstation_home: "/home/{{ workstation_user }}"
+#####################################
+#
+# PUBLIC REPO - DONT USE SECRETS HERE
+#
+#####################################
 
-git_user_name: "Roel"
+workstation_user: "{{ ansible_user_id }}"
+workstation_home: "{{ ansible_env.HOME }}"
+
+# https://github.com/settings/emails
 git_user_email: "10514742+rboonzaijer@users.noreply.github.com"
-ssh_key_comment: "roel"
+git_user_name: "Roel"
+
+ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }} (ansible {{ ansible_date_time.date }})"
+# github: https://github.com/settings/ssh/new
+# gitlab: https://gitlab.com/-/user_settings/ssh_keys
 
 nvm_version: "v0.40.5"
 node_version: "--lts"

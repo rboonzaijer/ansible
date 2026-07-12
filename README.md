@@ -1,72 +1,66 @@
-# ansible-kubuntu
+# ansible
 
-## Kubuntu 26.04
+Ansible playbooks to quickly set up a fresh minimal installation with all required development tools and configuration.
 
-### Initial setup
+- Minimal installation
+- Kubuntu 26.04
+
+## Initial setup
 
 ```bash
+# Make sure ansible is not installed with apt
 sudo apt update -y
 sudo apt purge ansible -y
 sudo apt autoremove -y
-sudo apt install -y git firefox
-```
 
-### Download 1password first with firefox
-
-```bash
-./usr/bin/firefox
-```
-
-### Configurue git
-
-```bash
-git config --global user.name "Roel"
-git config --global user.email "10514742+rboonzaijer@users.noreply.github.com"
-
-ssh-keygen -t ed25519 -C "rboonzaijer"
-cat ~/.ssh/id_ed25519.pub
-```
-
-### Add to github
-
-https://github.com/settings/ssh/new
-
-### Install ansible
-
-```bash
-# Install ansible with python (not with apt!): https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
+# Install ansible with python
+# https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
+sudo apt install pipx -y
 pipx install --include-deps ansible
 pipx ensurepath
 source ~/.bashrc
 ansible --version
 
-# Upgrade ansible to latest
+# Upgrade ansible
 pipx upgrade --include-injected ansible
 ```
 
-### Get ansible playbook files
+## Download playbooks
 
 ```bash
-git clone git@github.com:rboonzaijer/ansible-kubuntu.git
-cd ansible-kubuntu
+curl -L -o ansible.zip https://github.com/rboonzaijer/ansible/archive/refs/heads/main.zip
+
+unzip ansible.zip -d ~/ansible-zip
+
+cd ~/ansible-zip/*/
 ```
 
-### Run ansible playbook
+## Run
 
 ```bash
-ansible-playbook -i inventory.ini playbook-install-desktop.yml --ask-become-pass --limit local
+ansible-playbook -i inventory.ini playbook-desktop.yml --ask-become-pass --limit local
 
 ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit local
 ```
 
-- --ask-become-pass # ask the sudo password before running
-- --limit local # limit to local hosts
+## Add SSH-Key to git accounts
 
-### Manual
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+- github: https://github.com/settings/ssh/new
+- gitlab: https://gitlab.com/-/user_settings/ssh_keys
 
-- Add ssh-key:
-  - github: https://github.com/settings/ssh/new
-  - gitlab: https://gitlab.com/-/user_settings/ssh_keys
+```bash
+docker login
+npm login
+```
+
+Also:
+
+- 1password: login
+- chrome: login
+- firefox: login
 - vscode: signin with github (sync)
 
 # Manage playbooks/roles
