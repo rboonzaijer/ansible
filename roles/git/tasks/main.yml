@@ -9,18 +9,13 @@
     signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217
   notify: apt-update
 
-- name: Check if notifiers were called - call handlers if requied - apt-update
+- name: Flush handlers
   ansible.builtin.meta: flush_handlers
-
-# - name: Update apt cache
-#   ansible.builtin.apt:
-#     update_cache: true
 
 - name: Install Git
   ansible.builtin.apt:
     name: git
     state: present
-    #state: latest
 
 - name: Configure Git user name
   become: true

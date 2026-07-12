@@ -24,9 +24,3 @@
       - wget
       - zip
     state: present
-
-# - name: Create APT keyrings directory
-#   ansible.builtin.file:
-#     path: /etc/apt/keyrings
-#     state: directory
-#     mode: "0755"
