@@ -1,0 +1,7 @@
+---
+- name: Debugging
+  ansible.builtin.debug:
+    msg: >
+      workstation_user={{ workstation_user }}
+      workstation_home={{ workstation_home }}
+      ssh_key_comment={{ ssh_key_comment }}

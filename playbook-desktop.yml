@@ -1,6 +1,6 @@
 ---
 - name: Install development tools for desktop
-  hosts: local
+  hosts: local_desktop
   become: true
   vars_files:
     - ./variables.yml
@@ -9,6 +9,9 @@
       ansible.builtin.apt:
         update_cache: true
   roles:
+    # Debug dynamic variables
+    - debug
+
     # System packages
     - common
 

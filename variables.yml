@@ -6,16 +6,16 @@
 #
 #####################################
 
-workstation_user: "{{ ansible_user_id }}"
-workstation_home: "{{ ansible_env.HOME }}"
+workstation_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+workstation_home: "/home/{{ workstation_user }}"
+
+ssh_key_comment: "{{ workstation_user }}@{{ ansible_facts.hostname }} (ansible {{ ansible_facts.date_time.date }})"
+# add public key to github: https://github.com/settings/ssh/new
+# add public key to gitlab: https://gitlab.com/-/user_settings/ssh_keys
 
 # https://github.com/settings/emails
 git_user_email: "10514742+rboonzaijer@users.noreply.github.com"
 git_user_name: "Roel"
-
-ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }} (ansible {{ ansible_date_time.date }})"
-# github: https://github.com/settings/ssh/new
-# gitlab: https://gitlab.com/-/user_settings/ssh_keys
 
 nvm_version: "v0.40.5"
 node_version: "--lts"

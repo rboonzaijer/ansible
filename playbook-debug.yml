@@ -1,0 +1,8 @@
+---
+- name: Debug dynamic variables
+  hosts: local_desktop
+  become: true
+  vars_files:
+    - ./variables.yml
+  roles:
+    - debug

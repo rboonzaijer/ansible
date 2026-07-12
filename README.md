@@ -38,9 +38,14 @@ cd ~/ansible-zip/*/
 ## Run
 
 ```bash
-ansible-playbook -i inventory.ini playbook-desktop.yml --ask-become-pass --limit local
+# Debug variables
+ansible-playbook -i inventory.ini --ask-become-pass playbook-debug.yml
 
-ansible-playbook -i inventory.ini playbook-upgrade.yml --ask-become-pass --limit local
+# Install desktop tools
+ansible-playbook -i inventory.ini --ask-become-pass playbook-desktop.yml --limit local_desktop
+
+# Update/Upgrade
+ansible-playbook -i inventory.ini --ask-become-pass playbook-upgrade.yml --limit local_desktop
 ```
 
 ## Add SSH-Key to git accounts
