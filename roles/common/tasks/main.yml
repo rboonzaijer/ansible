@@ -4,6 +4,12 @@
     update_cache: true
     cache_valid_time: 3600
 
+- name: Finish interrupted package configuration
+  ansible.builtin.command:
+    cmd: dpkg --configure -a
+  become: true
+  changed_when: false
+
 - name: Install common packages
   ansible.builtin.apt:
     name:
