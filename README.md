@@ -45,7 +45,7 @@ ansible-playbook -i inventory.ini --ask-become-pass playbook-debug.yml
 ansible-playbook -i inventory.ini --ask-become-pass playbook-desktop.yml --limit local_desktop
 
 # Update/Upgrade
-ansible-playbook -i inventory.ini --ask-become-pass playbook-upgrade.yml --limit local_desktop
+ansible-playbook --ask-become-pass playbook-upgrade.yml --limit local_desktop
 
 # After installation, reload docker group & profile
 newgrp docker

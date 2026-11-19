@@ -1,0 +1,24 @@
+all:
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  children:
+    linux:
+      children:
+        local_desktop:
+          vars:
+            ansible_become: true
+            ansible_connection: local
+            ansible_become_exe: /usr/bin/sudo.ws
+            is_server: false
+          hosts:
+            localhost:
+
+        # servers:
+        #   vars:
+        #     ansible_become: true
+        #     is_server: true
+        #   hosts:
+        #     server1:
+        #     server2:
+
